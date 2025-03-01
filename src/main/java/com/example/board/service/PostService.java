@@ -36,7 +36,9 @@ public class PostService {
         Long newPostId = posts.stream().mapToLong(Post::getPostId).max().orElse(0L) + 1;
 
         // Post 방식에서 body 입력받은 후 게시글 생성
-        Post newPost = new Post(newPostId, postPostRequestBody.getBody(), ZonedDateTime.now());
+//        Post newPost = new Post(newPostId, postPostRequestBody.getBody(), ZonedDateTime.now());
+        Post newPost = new Post(newPostId, postPostRequestBody.body(), ZonedDateTime.now());
+
         posts.add(newPost);
 
         return newPost;

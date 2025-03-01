@@ -39,7 +39,9 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Post> createPost(@RequestBody PostPostRequestBody postPostRequestBody) {
-        Post post = postService.createPost(postPostRequestBody);
+        // 직관적으로 변수명만 봐도 타입 추론 가능 -> var 타입으로 지정 (알아서 타입 추론)
+        // var => Post 타입
+        var post = postService.createPost(postPostRequestBody);
         return ResponseEntity.ok(post);
     }
 }
