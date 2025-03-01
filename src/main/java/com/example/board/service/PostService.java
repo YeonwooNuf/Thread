@@ -1,8 +1,13 @@
 package com.example.board.service;
 
 import com.example.board.model.Post;
+import com.example.board.model.PostPatchRequestBody;
 import com.example.board.model.PostPostRequestBody;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.RequestEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -27,13 +32,13 @@ public class PostService {
 
     // 특정 게시글 가져오기
     public Optional<Post> getPostByPostId(Long postId) {
-        return posts.stream().filter(post -> postId.equals(post.postId())).findFirst();
+        return posts.stream().filter(post -> postId.equals(post.getPostId())).findFirst();
     }
 
     // 게시글 생성
     public Post createPost(PostPostRequestBody postPostRequestBody) {
         // 존재할 경우 최대값, 없을 경우 1L
-        var newPostId = posts.stream().mapToLong(Post::postId).max().orElse(0L) + 1;
+        var newPostId = posts.stream().mapToLong(Post::getPostId).max().orElse(0L) + 1;
 
         // Post 방식에서 body 입력받은 후 게시글 생성
 //        Post newPost = new Post(newPostId, postPostRequestBody.getBody(), ZonedDateTime.now());
@@ -42,6 +47,21 @@ public class PostService {
         posts.add(newPost);
 
         return newPost;
+    }
+
+    public Post updatePost(Long postId ,PostPatchRequestBody postPatchRequestBody) {
+        Optional<Post> postOptional =
+                posts.stream().filter(post -> postId.equals(post.getPostId())).findFirst();
+
+        // 게시글이 존재할 경우
+        if(postOptional.isPresent()) {
+            Post postToUpdate = postOptional.get();
+            postToUpdate.setBody(postPatchRequestBody.body());
+            return postToUpdate;
+        } else {
+            // 존재하지 않는 경우 status 코드와 에러 메세지 반환
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
+        }
     }
 
 //    List<Post> posts = new ArrayList<>();

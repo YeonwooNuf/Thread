@@ -1,6 +1,7 @@
 package com.example.board.controller;
 
 import com.example.board.model.Post;
+import com.example.board.model.PostPatchRequestBody;
 import com.example.board.model.PostPostRequestBody;
 import com.example.board.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,14 @@ public class PostController {
         // 직관적으로 변수명만 봐도 타입 추론 가능 -> var 타입으로 지정 (알아서 타입 추론)
         // var => Post 타입
         var post = postService.createPost(postPostRequestBody);
+        return ResponseEntity.ok(post);
+    }
+
+    @PatchMapping("/{postId}")
+    public ResponseEntity<Post> updatePost(
+            @PathVariable Long postId, PostPatchRequestBody postPatchRequestBody) {
+
+        var post = postService.updatePost(postId, postPatchRequestBody);
         return ResponseEntity.ok(post);
     }
 }
