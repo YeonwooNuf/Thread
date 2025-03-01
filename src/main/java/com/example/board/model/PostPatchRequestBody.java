@@ -4,7 +4,8 @@ public record PostPatchRequestBody(String body) {
 
 }
 
-//// Post를 Post 방식으로 사용하는 RequestBody
+// Post를 Post 방식으로 사용하는 RequestBody
+// 클래스 -> record 방식 선언. setter가 없음
 //public class PostPostRequestBody {
 //    private String body;
 //
