@@ -64,6 +64,19 @@ public class PostService {
         }
     }
 
+    public void deletePost(Long postId) {
+        Optional<Post> postOptional =
+                posts.stream().filter(post -> postId.equals(post.getPostId())).findFirst();
+
+        // 게시글이 존재할 경우
+        if(postOptional.isPresent()) {
+            posts.remove(postOptional.get());
+        } else {
+            // 존재하지 않는 경우 status 코드와 에러 메세지 반환
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
+        }
+    }
+
 //    List<Post> posts = new ArrayList<>();
 //        posts.add(new Post(1L, "Post 1",ZonedDateTime.now()));
 //        posts.add(new Post(2L, "Post 2", ZonedDateTime.now()));
