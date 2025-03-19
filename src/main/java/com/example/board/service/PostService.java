@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Service
 public class PostService {
-    // 커밋 테스트
     private static final List<Post> posts = new ArrayList<>();
 
     static  {
