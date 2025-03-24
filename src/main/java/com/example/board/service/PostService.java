@@ -75,10 +75,8 @@ public class PostService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post not found.");
         }
     }
-
 //    List<Post> posts = new ArrayList<>();
 //        posts.add(new Post(1L, "Post 1",ZonedDateTime.now()));
 //        posts.add(new Post(2L, "Post 2", ZonedDateTime.now()));
 //        posts.add(new Post(3L, "Post 3", ZonedDateTime.now()));
-
 }
